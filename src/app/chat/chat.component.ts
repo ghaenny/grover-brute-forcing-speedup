@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-chat',
@@ -19,9 +19,34 @@ import { Component } from '@angular/core';
   templateUrl: './chat.component.html',
 })
 
-export class ChatComponent {
+export class ChatComponent implements OnInit {
 
   messages: any[] = [];
+  privateKeys: any[] = [];
+
+  ngOnInit() {
+    this.privateKeys.push(
+      {
+        key: 'Test',
+        user: 'Jake',
+      },
+      {
+        key: 'Test',
+        user: 'John',
+      }
+    )
+  }
+
+  getPrivateKey(userName: string) {
+    return this.privateKeys.find(k => k.user === userName).key;
+  }
+
+  setPrivateKey(event: any, userName: string) {
+    this.privateKeys.push({
+      key: event.message,
+      user: userName,
+    })
+  }
 
   sendMessage(event: any, userName: string, avatar: string, reply: boolean) {
     const files = !event.files ? [] : event.files.map((file) => {

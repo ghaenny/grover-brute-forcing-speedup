@@ -10,9 +10,12 @@
                    [latitude]="message.latitude"
                    [longitude]="message.longitude"
                    [avatar]="message.user.avatar"></nb-chat-message>
-  <nb-chat-form (send)="sendMessage($event, 'Jake', 'http://www.reactiongifs.com/r/wnd1.gif', true)" [showButton]="false" [dropFiles]="true">
+  <nb-chat-form (send)="setPrivateKey($event, 'Jake')" [message]="getPrivateKey('Jake')" [messagePlaceholder]="'Private Key'" [showButton]="false"></nb-chat-form>
+  <nb-chat-form (send)="sendMessage($event, 'Jake', 'http://www.reactiongifs.com/r/wnd1.gif', true)">
   </nb-chat-form>
 </nb-chat>
+
+
 <nb-chat title="John" size="medium" status="success">
   <nb-chat-message *ngFor="let message of messages"
                    [type]="message.type"
@@ -25,6 +28,7 @@
                    [latitude]="message.latitude"
                    [longitude]="message.longitude"
                    [avatar]="message.user.avatar"></nb-chat-message>
-  <nb-chat-form (send)="sendMessage($event, 'John', 'https://i.gifer.com/no.gif', false)" [showButton]="false" [dropFiles]="true">
+  <nb-chat-form (send)="setPrivateKey($event, 'John')" [message]="getPrivateKey('Jake')" [messagePlaceholder]="'Private Key'" [showButton]="false"></nb-chat-form>
+  <nb-chat-form (send)="sendMessage($event, 'John', 'https://i.gifer.com/no.gif', false)">
   </nb-chat-form>
 </nb-chat>
