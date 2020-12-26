@@ -3,9 +3,9 @@
     Symmetric Enctription Brute Force
   </nb-layout-header>
   <nb-layout-column>
-    <app-chat></app-chat>
+    <app-chat [privateKeys]="privateKeys" [messages]="messages"></app-chat>
   </nb-layout-column>
   <nb-layout-footer>
-    <app-brute-force></app-brute-force>
+    <app-brute-force [privateKeys]="privateKeys" [messages]="messages"></app-brute-force>
   </nb-layout-footer>
 </nb-layout>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-brute-force',
@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./brute-force.component.scss']
 })
 export class BruteForceComponent implements OnInit {
+  @Input()
+  messages: any[];
+
+  @Input()
+  privateKeys: any[];
 
   constructor() { }
 

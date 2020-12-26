@@ -1,5 +1,6 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import * as crypto from 'crypto-js';
 
 @Component({
   selector: 'app-chat',
@@ -21,8 +22,11 @@ import { Component, OnInit } from '@angular/core';
 
 export class ChatComponent implements OnInit {
 
-  messages: any[] = [];
-  privateKeys: any[] = [];
+  @Input()
+  messages: any[];
+
+  @Input()
+  privateKeys: any[];
 
   ngOnInit() {
     this.privateKeys.push(
@@ -33,6 +37,10 @@ export class ChatComponent implements OnInit {
       {
         key: 'Test',
         user: 'John',
+      },
+      {
+        key: '',
+        user: 'MITM',
       }
     )
   }
@@ -42,10 +50,18 @@ export class ChatComponent implements OnInit {
   }
 
   setPrivateKey(event: any, userName: string) {
-    this.privateKeys.push({
-      key: event.message,
-      user: userName,
-    })
+    let privateKey = this.privateKeys.find(k => k.user === userName);
+    if (!privateKey) {
+      this.privateKeys.push({
+        key: event.message,
+        user: userName,
+      });
+    } else {
+      privateKey.key = event.message;
+    }
+
+
+    console.log('Private Key: ', this.privateKeys)
   }
 
   sendMessage(event: any, userName: string, avatar: string, reply: boolean) {
@@ -58,7 +74,7 @@ export class ChatComponent implements OnInit {
     });
 
     this.messages.push({
-      text: event.message,
+      text: this.encrypt(event.message, userName),
       date: new Date(),
       reply: reply,
       type: files.length ? 'file' : 'text',
@@ -68,5 +84,18 @@ export class ChatComponent implements OnInit {
         avatar: avatar,
       },
     });
+  }
+
+  encrypt(data: string, userName: string): string {
+    return crypto.AES.encrypt(data, this.getPrivateKey(userName));
+  }
+
+  decrypt(data: string, userName: string) {
+    const key = this.getPrivateKey(userName);
+    if (!key) return data;
+    const decryptedBytes = crypto.AES.decrypt(data, key);
+    const plainText = decryptedBytes.toString(crypto.enc.Utf8);
+    if (!plainText) return data;
+    return plainText;
   }
 }

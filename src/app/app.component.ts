@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'symmetric-encyrption';
+  messages: any[] = [];
+  privateKeys: any[] = [];
 }
