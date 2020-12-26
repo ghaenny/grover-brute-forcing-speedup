@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbChatModule, NbButtonModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbChatModule, NbButtonModule, NbCardModule, NbProgressBarModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ChatComponent } from './chat/chat.component';
 import { BruteForceComponent } from './brute-force/brute-force.component';
@@ -13,7 +13,7 @@ import { BruteForceComponent } from './brute-force/brute-force.component';
   declarations: [
     AppComponent,
     ChatComponent,
-    BruteForceComponent
+    BruteForceComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,6 +24,8 @@ import { BruteForceComponent } from './brute-force/brute-force.component';
     NbEvaIconsModule,
     NbChatModule,
     NbButtonModule,
+    NbCardModule,
+    NbProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
