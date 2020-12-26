@@ -26,42 +26,12 @@ export class ChatComponent implements OnInit {
   messages: any[];
 
   @Input()
-  privateKeys: any[];
+  userKey: string;
+
+  @Input()
+  hackerKey: string;
 
   ngOnInit() {
-    this.privateKeys.push(
-      {
-        key: 'Test',
-        user: 'Jake',
-      },
-      {
-        key: 'Test',
-        user: 'John',
-      },
-      {
-        key: '',
-        user: 'MITM',
-      }
-    )
-  }
-
-  getPrivateKey(userName: string) {
-    return this.privateKeys.find(k => k.user === userName).key;
-  }
-
-  setPrivateKey(event: any, userName: string) {
-    let privateKey = this.privateKeys.find(k => k.user === userName);
-    if (!privateKey) {
-      this.privateKeys.push({
-        key: event.message,
-        user: userName,
-      });
-    } else {
-      privateKey.key = event.message;
-    }
-
-
-    console.log('Private Key: ', this.privateKeys)
   }
 
   sendMessage(event: any, userName: string, avatar: string, reply: boolean) {
@@ -74,7 +44,7 @@ export class ChatComponent implements OnInit {
     });
 
     this.messages.push({
-      text: this.encrypt(event.message, userName),
+      text: this.encrypt(event.message),
       date: new Date(),
       reply: reply,
       type: files.length ? 'file' : 'text',
@@ -86,13 +56,11 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  encrypt(data: string, userName: string): string {
-    return crypto.AES.encrypt(data, this.getPrivateKey(userName));
+  encrypt(data: string): string {
+    return crypto.AES.encrypt(data, this.userKey);
   }
 
-  decrypt(data: string, userName: string) {
-    const key = this.getPrivateKey(userName);
-    if (!key) return data;
+  decrypt(data: string, key: string) {
     const decryptedBytes = crypto.AES.decrypt(data, key);
     const plainText = decryptedBytes.toString(crypto.enc.Utf8);
     if (!plainText) return data;

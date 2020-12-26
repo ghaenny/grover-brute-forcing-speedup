@@ -1,7 +1,7 @@
 <nb-chat title="Jake" size="medium" status="warning">
   <nb-chat-message *ngFor="let message of messages"
                    [type]="message.type"
-                   [message]="this.decrypt(message.text, 'Jake')"
+                   [message]="this.decrypt(message.text, userKey)"
                    [reply]="message.reply"
                    [sender]="message.user.name"
                    [date]="message.date"
@@ -10,7 +10,6 @@
                    [latitude]="message.latitude"
                    [longitude]="message.longitude"
                    [avatar]="message.user.avatar"></nb-chat-message>
-  <nb-chat-form (send)="setPrivateKey($event, 'Jake')" [message]="getPrivateKey('Jake')" [messagePlaceholder]="'Private Key'" [showButton]="false"></nb-chat-form>
   <nb-chat-form (send)="sendMessage($event, 'Jake', 'http://www.reactiongifs.com/r/wnd1.gif', true)">
   </nb-chat-form>
 </nb-chat>
@@ -18,7 +17,7 @@
 <nb-chat title="MAN IN THE MIDDLE" size="medium" status="danger">
   <nb-chat-message *ngFor="let message of messages"
                    [type]="message.type"
-                   [message]="this.decrypt(message.text, 'MITM')"
+                   [message]="this.decrypt(message.text, hackerKey)"
                    [reply]="false"
                    [sender]="message.user.name"
                    [date]="message.date"
@@ -33,7 +32,7 @@
 <nb-chat title="John" size="medium" status="success">
   <nb-chat-message *ngFor="let message of messages"
                    [type]="message.type"
-                   [message]="this.decrypt(message.text, 'John')"
+                   [message]="this.decrypt(message.text, userKey)"
                    [reply]="!message.reply"
                    [sender]="message.user.name"
                    [date]="message.date"
@@ -42,7 +41,6 @@
                    [latitude]="message.latitude"
                    [longitude]="message.longitude"
                    [avatar]="message.user.avatar"></nb-chat-message>
-  <nb-chat-form (send)="setPrivateKey($event, 'John')" [message]="getPrivateKey('John')" [messagePlaceholder]="'Private Key'" [showButton]="false"></nb-chat-form>
   <nb-chat-form (send)="sendMessage($event, 'John', 'https://i.gifer.com/no.gif', false)">
   </nb-chat-form>
 </nb-chat>

@@ -1,11 +1,8 @@
 <nb-layout>
-  <nb-layout-header>
-    Symmetric Enctription Brute Force
-  </nb-layout-header>
   <nb-layout-column>
-    <app-chat [privateKeys]="privateKeys" [messages]="messages"></app-chat>
+    <app-chat [userKey]="userKey" [hackerKey]="hackerKey" [messages]="messages"></app-chat>
   </nb-layout-column>
   <nb-layout-footer>
-    <app-brute-force [privateKeys]="privateKeys" [messages]="messages"></app-brute-force>
+    <app-footer [userKey]="userKey" [hackerKey]="hackerKey" (userKeyChanged)="userKeyChanged($event)" (hackerKeyChanged)="hackerKey = $event" [messages]="messages"></app-footer>
   </nb-layout-footer>
 </nb-layout>

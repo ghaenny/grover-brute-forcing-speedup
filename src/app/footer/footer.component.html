@@ -1,0 +1,10 @@
+<app-brute-force [hackerKey]="hackerKey" [messages]="messages" (hackerKeyChanged)="setHackerKey($event)"></app-brute-force>
+
+<nb-card>
+  <nb-card-header>Key</nb-card-header>
+  <nb-card-body>
+    <input type="text" nbInput fullWidth status="basic" placeholder="Key" [value]="userKey" (input)="setUserKey($event.target.value)">
+  </nb-card-body>
+</nb-card>
+
+<nb-progress-bar [value]="50" fullWidth status="danger"></nb-progress-bar>

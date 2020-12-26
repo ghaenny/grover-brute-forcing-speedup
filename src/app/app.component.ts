@@ -8,5 +8,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'symmetric-encyrption';
   messages: any[] = [];
-  privateKeys: any[] = [];
+  userKey: string = 'Test';
+  hackerKey: string = '';
+
+  userKeyChanged(key: string) {
+    this.userKey = key;
+    this.messages = [];
+  }
 }
