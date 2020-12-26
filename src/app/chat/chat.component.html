@@ -15,6 +15,20 @@
   </nb-chat-form>
 </nb-chat>
 
+<nb-chat title="MAN IN THE MIDDLE" size="medium" status="danger">
+  <nb-chat-message *ngFor="let message of messages"
+                   [type]="message.type"
+                   [message]="message.text"
+                   [reply]="false"
+                   [sender]="message.user.name"
+                   [date]="message.date"
+                   [files]="message.files"
+                   [quote]="message.quote"
+                   [latitude]="message.latitude"
+                   [longitude]="message.longitude"
+                   [avatar]="message.user.avatar"></nb-chat-message>
+</nb-chat>
+
 
 <nb-chat title="John" size="medium" status="success">
   <nb-chat-message *ngFor="let message of messages"
