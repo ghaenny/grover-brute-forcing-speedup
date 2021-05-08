@@ -24,54 +24,82 @@ export class BruteForceComponent implements OnInit {
     this.hackerKeyChanged.emit(key);
   }
 
-  async bruteForce() {
-    console.log('Brute Force......');
-    console.log('User key: ', this.userKey);
-    console.log('Hack Key: ', this.hackerKey);
+  bruteForceQuantum() {
+    let key = this.userKey.substr(0, this.userKey.length / 2);
+    this.bruteForce(key);
+  }
 
-    let key = 'keys';
-
-    let i = parseInt("aaaa", 36);
-    let end = parseInt("zzzz", 36);
-    console.log('Start: ', i);
-    console.log('End: ', end);
+  bruteForce(key: string) {
+    console.log('Key: ', key);
 
     this.status = 0;
 
-    let maxSteps = Math.pow(36, key.length);
+    let startString = "";
+    let endString = "";
+
+    for(let i = 0; i<key.length; i++) {
+      if (i < key.length-1)
+        startString += '0';
+      else
+        startString += '1';
+
+      endString += '1';
+    }
+
+    let i = parseInt(startString, 2);
+    let end = parseInt(endString, 2);
+    let maxSteps = Math.pow(2, key.length);
+
+    console.log(startString, endString);
+    console.log('Start: ', i);
+    console.log('End: ', end);
     console.log('Max steps: ', maxSteps);
-    let result = await this.bruteForceAsync(i, key, end, maxSteps);
-    console.log(result);
+
+    if (key === startString) {
+      this.bruteForceDone(startString);
+    }
+    else {
+      this.bruteForceStep(i, key, end - 1, 1, key.length,
+      (k) => this.bruteForceDone(k),
+      (s) => this.status = Math.round(s / maxSteps * 100))
+    }
   }
 
-  bruteForceAsync(i: number, key: string, end: number, maxSteps: number) {
-    return new Promise(resolve => {
-      this.bruteForceStep(i, key, end, 1, (k) => {
-        this.status = 100;
-        resolve(k);
-      },
-      (s) => {
-        this.status = Math.round(s / maxSteps * 100);
-      });
-    });
-  }
-
-  bruteForceStep(i: number, key: string, end: number, step: number, done, update) {
+  bruteForceStep(i: number, key: string, end: number, step: number, length: number, done, update) {
     if (step % 10 === 0) {
       update(step);
     }
 
+    // console.log(this.dec2bin(i, length));
+
     setTimeout(() => {
-      if (i.toString(36) != key && i <= end) {
+      if (this.dec2bin(i, length) != key && i <= end) {
         i++;
         step++;
-        this.bruteForceStep(i, key, end, step, done, update);
-      } else if (i.toString(36) == key) {
-        done('Key is: ' + key);
-      } else {
-        update('Key not found');
+        this.bruteForceStep(i, key, end, step, length, done, update);
+      } else if (this.dec2bin(i, length) == key) {
+        done(key);
       }
     }, 0);
+  }
+
+  bruteForceDone(result) {
+    this.status = 100;
+    this.hackerKey = result;
+    this.hackerKeyChanged.emit(this.hackerKey);
+
+    console.log('result: ', result);
+  }
+
+  dec2bin(dec: number, length: number) {
+    let bin = (dec >>> 0).toString(2);
+    let res = "";
+
+    for(let i = 0; i < length - bin.length; i++) {
+      res += "0";
+    }
+
+    return res + bin;
   }
 
   constructor() { }
