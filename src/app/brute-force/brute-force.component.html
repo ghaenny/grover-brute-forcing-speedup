@@ -1,7 +1,9 @@
 <nb-card>
   <nb-card-header>Brute Force</nb-card-header>
   <nb-card-body class="example-items-rows">
-    <button nbButton status="primary">Normal Computer</button><br><br>
+    <button nbButton status="primary" (click)="bruteForce()">Normal Computer</button><br><br>
     <button nbButton status="danger">Quantium Computer</button>
   </nb-card-body>
 </nb-card>
+
+<nb-progress-bar [value]="status" fullWidth status="danger"></nb-progress-bar>
