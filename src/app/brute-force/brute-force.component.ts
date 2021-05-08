@@ -56,11 +56,11 @@ export class BruteForceComponent implements OnInit {
     console.log('Max steps: ', maxSteps);
 
     if (key === startString) {
-      this.bruteForceDone(startString);
+      this.bruteForceDone();
     }
     else {
       this.bruteForceStep(i, key, end - 1, 1, key.length,
-      (k) => this.bruteForceDone(k),
+      (k) => this.bruteForceDone(),
       (s) => this.status = Math.round(s / maxSteps * 100))
     }
   }
@@ -69,8 +69,6 @@ export class BruteForceComponent implements OnInit {
     if (step % 10 === 0) {
       update(step);
     }
-
-    // console.log(this.dec2bin(i, length));
 
     setTimeout(() => {
       if (this.dec2bin(i, length) != key && i <= end) {
@@ -83,12 +81,10 @@ export class BruteForceComponent implements OnInit {
     }, 0);
   }
 
-  bruteForceDone(result) {
+  bruteForceDone() {
     this.status = 100;
-    this.hackerKey = result;
+    this.hackerKey = this.userKey;
     this.hackerKeyChanged.emit(this.hackerKey);
-
-    console.log('result: ', result);
   }
 
   dec2bin(dec: number, length: number) {
