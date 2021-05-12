@@ -6,7 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./brute-force.component.scss']
 })
 export class BruteForceComponent implements OnInit {
-  status = 100;
+  status = 0;
 
   @Input()
   messages: any[];
@@ -22,6 +22,11 @@ export class BruteForceComponent implements OnInit {
 
   setHackerKey(key: string) {
     this.hackerKeyChanged.emit(key);
+  }
+
+  reset() {
+    this.setHackerKey('');
+    this.status = 0;
   }
 
   bruteForceQuantum() {
@@ -84,7 +89,7 @@ export class BruteForceComponent implements OnInit {
   bruteForceDone() {
     this.status = 100;
     this.hackerKey = this.userKey;
-    this.hackerKeyChanged.emit(this.hackerKey);
+    this.setHackerKey(this.hackerKey);
   }
 
   dec2bin(dec: number, length: number) {
